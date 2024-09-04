@@ -1,0 +1,15 @@
+<launch>
+
+  <!-- Load the URDF into the robot_description parameter using xacro (you can replace .xacro with .urdf if needed) -->
+  <param name="robot_description" command="cat '$(find my_rb1_description)/urdf/my_rb1_robot.urdf'" />
+
+   <!-- send fake joint values -->
+    <node name="joint_state_publisher_gui" pkg="joint_state_publisher_gui" type="joint_state_publisher_gui" />
+
+  <!-- Robot State Publisher (it should use the robot_description parameter, not the URDF file directly) -->
+  <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" />
+
+  <!-- Rviz -->
+  <node name="rviz" pkg="rviz" type="rviz" />
+
+</launch>
