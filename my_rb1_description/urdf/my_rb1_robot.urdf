@@ -23,7 +23,7 @@
         <material>Gazebo/Black</material>
     </gazebo>
     <gazebo reference="front_laser">
-        <material>Gazebo/Black</material>
+        <material>Gazebo/red</material>
     </gazebo>
 
     <gazebo reference="front_caster">
