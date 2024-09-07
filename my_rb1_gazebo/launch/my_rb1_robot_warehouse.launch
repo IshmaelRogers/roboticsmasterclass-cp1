@@ -21,7 +21,7 @@
     <!-- Arguments for robot spawning position -->
     <arg name="x" default="-0.401707"/>
     <arg name="y" default="-1.383830"/>
-    <arg name="z" default="0.5"/>
+    <arg name="z" default="0.245"/>
 
     <!-- Spawn the robot in Gazebo at the specified x, y, z coordinates -->
     <node name="myrb1_spawn" pkg="gazebo_ros" type="spawn_model" output="screen"

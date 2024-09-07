@@ -18,6 +18,50 @@
         <color rgba="1 1 1 0.5"/>
     </material>
 
+
+     <gazebo reference="base_link">
+        <material>Gazebo/Black</material>
+    </gazebo>
+    <gazebo reference="front_laser">
+        <material>Gazebo/Black</material>
+    </gazebo>
+
+    <gazebo reference="front_caster">
+        <material>Gazebo/Green</material>
+        <mu>0.25</mu>
+        <mu2>0.25</mu2>
+    </gazebo>
+    <gazebo reference="rear_caster">
+        <material>Gazebo/Green</material>
+        <mu>0.25</mu>
+        <mu2>0.25</mu2>
+    </gazebo>
+    <gazebo reference="right_wheel">
+        <material>Gazebo/Red</material>
+        <mu>10</mu>
+        <mu2>25</mu2>
+    </gazebo>
+    <gazebo reference="left_wheel">
+        <mu>10</mu>
+        <mu2>25</mu2>
+        <material>Gazebo/Red</material>
+    </gazebo>
+
+    <!-- Preserve fixed joints -->
+    <gazebo reference="joint_base_link_front_caster">
+        <preserveFixedJoint>true</preserveFixedJoint>
+    </gazebo>
+
+    <gazebo reference="joint_base_link_rear_caster">
+        <preserveFixedJoint>true</preserveFixedJoint>
+    </gazebo>
+
+    <gazebo reference="joint_base_link_front_laser">
+        <preserveFixedJoint>true</preserveFixedJoint>
+    </gazebo>
+
+    
+
     <!-- Links -->
 
     <!-- Link: base_footprint -->
@@ -243,4 +287,65 @@
         <parent link="base_link" />
         <child link="front_laser" />
     </joint>
+
+    <!-- Gazebo Plugins -->
+    <!-- Differential Drive Plugin -->
+    <gazebo>
+        <plugin name="differential_drive_controller" filename="libgazebo_ros_diff_drive.so">
+            <!-- Specify the robot base frame -->
+            <alwaysOn>true</alwaysOn>
+            <updateRate>20</updateRate>
+            <!-- Name of the left and right wheel joints in your URDF -->
+            <leftJoint>joint_base_link_left_wheel</leftJoint>
+            <rightJoint>joint_base_link_right_wheel</rightJoint>
+            <!-- Wheel separation and radius -->
+            <wheelSeparation>0.4</wheelSeparation>   <!-- Distance between the wheels -->
+            <wheelDiameter>0.05</wheelDiameter>         <!-- Radius of the wheels -->
+            <torque>5</torque>
+            <wheelAcceleration>1.0</wheelAcceleration>
+            <!-- ROS topics for velocity commands and odometry -->
+            <commandTopic>cmd_vel</commandTopic>
+            <odometryTopic>odom</odometryTopic>
+            <odometryFrame>odom</odometryFrame>
+            <robotBaseFrame>base_footprint</robotBaseFrame>
+            <odometrySource>1</odometrySource>
+            <publishWheelTF>true</publishWheelTF>
+            <publishOdom>true</publishOdom>
+            <publishWheelJointState>true</publishWheelJointState>
+        </plugin>
+    </gazebo>
+
+    <!-- Laser Sensor Plugin -->
+    <gazebo reference="front_laser">
+        <sensor type="ray" name="laser_sensor">
+            <pose>0 0 0 0 0 0</pose>
+            <visualize>false</visualize>  <!-- Do not render the laser rays -->
+            <update_rate>20</update_rate>  <!-- How often to update -->
+            <ray>
+                <scan>
+                    <horizontal>
+                        <samples>720</samples>
+                        <resolution>1</resolution>
+                        <min_angle>-1.5708</min_angle>  <!-- -90 degrees -->
+                        <max_angle>1.5708</max_angle>   <!-- 90 degrees -->
+                    </horizontal>
+                </scan>
+                <range>
+                    <min>0.1</min>  <!-- Minimum range of the laser -->
+                    <max>10.0</max> <!-- Maximum range of the laser -->
+                </range>
+                <noise>
+                    <type>gaussian</type>
+                    <mean>0.0</mean>
+                    <stddev>0.01</stddev>
+                </noise>
+            </ray>
+            <plugin name="gazebo_ros_head_hokuyo_controller" filename="libgazebo_ros_laser.so">
+                <topicName>/scan</topicName>
+                <frameName>front_laser</frameName>
+            </plugin>
+        </sensor>
+    </gazebo>
+
+
 </robot>
