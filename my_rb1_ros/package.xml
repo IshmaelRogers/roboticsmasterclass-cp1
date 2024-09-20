@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <package format="2">
-  <name>my_rb1_robot</name>
+  <name>my_rb1_ros</name>
   <version>0.0.0</version>
   <description>The my_rb1_robot package</description>
 

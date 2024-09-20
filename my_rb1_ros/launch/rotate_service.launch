@@ -1,6 +1,6 @@
 <launch>
     <!-- Launch the rotate_service node -->
-    <node name="rotate_service" pkg="my_rb1_robot" type="my_rb1_robot_node" output="screen">
+    <node name="rotate_service" pkg="my_rb1_ros" type="my_rb1_ros_node" output="screen">
     </node>
 
     <!-- Use simulation time if you are working in simulation -->
